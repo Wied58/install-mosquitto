@@ -1,0 +1,34 @@
+---
+- name: Install and configure Mosquitto MQTT Broker
+  hosts: all
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Mosquitto
+      apt:
+        name: mosquitto
+        state: present
+
+    - name: Install Mosquitto client
+      apt:
+        name: mosquitto-clients
+        state: present
+
+    - name: Ensure Mosquitto is running
+      service:
+        name: mosquitto
+        state: started
+        enabled: yes
+
+    - name: Open port 1883 for MQTT (if firewall is used)
+      ufw:
+        rule: allow
+        name: 'Mosquitto MQTT'
+        port: 1883
+        proto: tcp
+
+
+
