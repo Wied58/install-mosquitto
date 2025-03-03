@@ -41,7 +41,6 @@
 #        proto: tcp
 
 
-  tasks:
     - name: Allow MQTT traffic on port 1883
       ansible.builtin.iptables:
         chain: INPUT
