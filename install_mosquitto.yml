@@ -12,6 +12,16 @@
         name: mosquitto
         state: present
 
+    - name: Configure Mosquitto to listen on all interfaces
+      ansible.builtin.copy:
+        dest: /etc/mosquitto/mosquitto.conf
+        content: |
+          listener 1883
+          allow_anonymous true
+        owner: root
+        group: root
+        mode: '0644'
+
     - name: Install Mosquitto client
       apt:
         name: mosquitto-clients
