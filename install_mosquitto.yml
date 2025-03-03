@@ -23,12 +23,34 @@
         state: started
         enabled: yes
 
-    - name: Open port 1883 for MQTT (if firewall is used)
-      ufw:
-        rule: allow
-        name: 'Mosquitto MQTT'
-        port: 1883
-        proto: tcp
+#    - name: Open port 1883 for MQTT (if firewall is used)
+#      ufw:
+#        rule: allow
+#        name: 'Mosquitto MQTT'
+#        port: 1883
+#        proto: tcp
 
 
+  tasks:
+    - name: Allow MQTT traffic on port 1883
+      ansible.builtin.iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 1883
+        jump: ACCEPT
 
+    - name: Allow MQTT over TLS on port 8883
+      ansible.builtin.iptables:
+        chain: INPUT
+        protocol: tcp
+        destination_port: 8883
+        jump: ACCEPT
+
+    - name: Save iptables rules (Debian-based systems)
+      ansible.builtin.command: iptables-save > /etc/iptables/rules.v4
+      changed_when: false
+
+    - name: Ensure iptables-persistent is installed
+      ansible.builtin.apt:
+        name: iptables-persistent
+        state: present
