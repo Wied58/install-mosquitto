@@ -7,6 +7,6 @@ If that commad errors, please update Raspian with: sudo apt-get update  -y &&  s
 To run the Playbook:
 
 
-ansible-pull -d /home/pi/pull -i 'localhost,' -U https://github.com/Wied58/install_mosquitto install_mosquitto.yml
+ansible-pull -d /home/pi/pull -i 'localhost,' -U https://github.com/Wied58/install-_mosquitto install_mosquitto.yml
 
 

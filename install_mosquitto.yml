@@ -46,9 +46,16 @@
         destination_port: 8883
         jump: ACCEPT
 
-    - name: Save iptables rules (Debian-based systems)
-      ansible.builtin.command: iptables-save > /etc/iptables/rules.v4
-      changed_when: false
+
+     - name: Save iptables rules (Debian-based systems)
+       ansible.builtin.shell: iptables-save > /etc/iptables/rules.v4
+       args:
+         executable: /bin/bash
+       changed_when: false
+
+#    - name: Save iptables rules (Debian-based systems)
+#      ansible.builtin.command: iptables-save > /etc/iptables/rules.v4
+#      changed_when: false
 
     - name: Ensure iptables-persistent is installed
       ansible.builtin.apt:
